@@ -16,7 +16,7 @@
 # == Sample Usage:
 #
 #   class {'solr::core':
-#     solr_version           => '4.4.0'
+#     solr_version           => '5.2.1'
 #   }
 #
 class solr::core(
@@ -27,6 +27,7 @@ class solr::core(
 ) inherits solr::params {
 
   # using the 'creates' option here against the finished product so we only download this once
+  #  wget http://apache.cu.be/lucene/solr/5.2.1/solr-5.2.1.tgz
 
   $solr_tgz_url = "http://${apache_mirror}/lucene/solr/${solr_version}/solr-${solr_version}.tgz"
   exec { "wget solr":
