@@ -7,6 +7,7 @@ Vagrant.configure("2") do |config|
     [
       {
          name: "trusty64",
+         url: "https://atlas.hashicorp.com/ubuntu/boxes/trusty64/versions/20150609.0.10/providers/virtualbox.box",
          port: 8985
       },
       {
@@ -23,10 +24,7 @@ Vagrant.configure("2") do |config|
       config.vm.define "#{vm_info[:name]}-#{puppet_base}" do |custom|
         custom.vm.network :forwarded_port, guest: 8983, host: vm_info[:port]
         custom.vm.box = vm_info[:name]
-        if !vm_info[:url].nil?
-            custom.vm.box_url = vm_info[:url]
-            config.vm.box = "ubuntu/trusty64"
-        end
+        custom.vm.box_url = vm_info[:url]
         custom.vm.provision :puppet do |puppet|
           puppet.manifests_path  = "."
           puppet.manifest_file  = "#{puppet_base}.pp"
