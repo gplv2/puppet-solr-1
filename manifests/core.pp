@@ -45,7 +45,7 @@ class solr::core(
   } ->
   
   exec { "untar solr":
-    command => "tar -xf /tmp/solr-${solr_version}.tgz -C ${solr_home}",
+    command => "tar -xzf /tmp/solr-${solr_version}.tgz -C ${solr_home}",
     creates => "${solr_home}/solr-${solr_version}",
   } ->
 
