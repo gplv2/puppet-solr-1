@@ -31,7 +31,7 @@ class solr::core(
 
   $solr_tgz_url = "http://${apache_mirror}/lucene/solr/${solr_version}/solr-${solr_version}.tgz"
   exec { "wget solr":
-    command => "wget --output-document=/tmp/solr-${solr_version}.tgz ${solr_tgz_url}",
+    command => "wget --output-document=/usr/local/src/solr-${solr_version}.tgz ${solr_tgz_url}",
     creates => "${solr_home}/solr-${solr_version}",
   } ->
 
@@ -45,7 +45,7 @@ class solr::core(
   } ->
   
   exec { "untar solr":
-    command => "tar -xzf /tmp/solr-${solr_version}.tgz -C ${solr_home}",
+    command => "tar -xzf /usr/local/src/solr-${solr_version}.tgz -C ${solr_home}",
     creates => "${solr_home}/solr-${solr_version}",
   } ->
 
