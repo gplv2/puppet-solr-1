@@ -25,6 +25,7 @@ Vagrant.configure("2") do |config|
         custom.vm.box = vm_info[:name]
         if !vm_info[:url].nil?
             custom.vm.box_url = vm_info[:url]
+            config.vm.box = "ubuntu/trusty64"
         end
         custom.vm.provision :puppet do |puppet|
           puppet.manifests_path  = "."
