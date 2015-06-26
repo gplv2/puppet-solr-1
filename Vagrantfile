@@ -23,8 +23,7 @@ Vagrant.configure("2") do |config|
       config.vm.define "#{vm_info[:name]}-#{puppet_base}" do |custom|
         custom.vm.network :forwarded_port, guest: 8983, host: vm_info[:port]
         custom.vm.box = vm_info[:name]
-        if cfg[:forwards]
-        if vm_info[:url] "prod" do |prod|
+        if !vm_info[:url].nil?
             custom.vm.box_url = vm_info[:url]
         end
         custom.vm.provision :puppet do |puppet|
