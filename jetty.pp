@@ -2,15 +2,7 @@ exec { "apt-get update":
      path => '/usr/bin',
 } ->
 
-package { "java7-jdk":
-     ensure => present,
-} -> 
-
 package { 'openjdk-7-jdk':
-    ensure => present,
-} ->
-
-package { 'libjetty-extra-java':
     ensure => present,
 } ->
 
