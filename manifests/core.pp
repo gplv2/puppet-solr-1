@@ -87,6 +87,11 @@ class solr::core(
     owner  => solr,
   } ->
 
+  file { '/data':
+    ensure => directory,
+    owner  => root,
+  } ->
+
   file { '/var/lib/solr':
     ensure => directory,
     owner  => solr,
