@@ -1,8 +1,13 @@
+case $::operatingsystem {
+  centos, redhat: { $java_name = 'java7-jdk' }
+  debian, ubuntu: { $java_name = 'openjdk-7-jdk' }
+}
+
 exec { 'apt-get update':
     path => '/usr/bin',
 } ->
 
-package { 'openjdk-7-jdk':
+package { $java_name :
     ensure => present,
 } ->
 
