@@ -2,8 +2,9 @@ class solr::params {
 
   case  $::osfamily {
     'Debian', 'Redhat': {
-      #$solr_version = '5.2.1'
-      $solr_version = '4.5.1'
+      # $solr_version = '5.2.1'
+      # $solr_version = '4.5.1'
+      $solr_version = '4.10.4'
       $solr_home = '/opt/solr'
       # needs to be full path to apache root
       $apache_mirror = "apache.cu.be" #because this is sometimes depressingly slow
