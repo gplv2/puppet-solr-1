@@ -97,7 +97,7 @@ class solr::core(
     owner  => solr,
   } ->
 
-  if ${solr_version} < "5.0.0" {
+  if $solr_version < "5.0.0" {
     file { '/data/solr/collection1':
         ensure => directory,
         owner  => solr,
