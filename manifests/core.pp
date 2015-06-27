@@ -28,8 +28,10 @@ class solr::core(
 
   # using the 'creates' option here against the finished product so we only download this once
   #  wget http://apache.cu.be/lucene/solr/5.2.1/solr-5.2.1.tgz
+  # http://192.168.1.111/solr/solr-5.2.1.tgz
 
-  $solr_tgz_url = "http://${apache_mirror}/lucene/solr/${solr_version}/solr-${solr_version}.tgz"
+  #$solr_tgz_url = "http://${apache_mirror}/lucene/solr/${solr_version}/solr-${solr_version}.tgz"
+  $solr_tgz_url = "http://192.168.1.111/solr/solr-${solr_version}.tgz"
   exec { "wget solr":
     command => "wget --output-document=/usr/local/src/solr-${solr_version}.tgz ${solr_tgz_url}",
     creates => "${solr_home}/solr-${solr_version}",
