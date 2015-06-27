@@ -1,5 +1,5 @@
-exec { "apt-get update":
-     path => '/usr/bin',
+exec { 'apt-get update':
+    path => '/usr/bin',
 } ->
 
 package { 'openjdk-7-jdk':
@@ -10,7 +10,7 @@ package { 'libtomcat7-java':
     ensure => present,
 } ->
 
-file { "/usr/java":
+file { '/usr/java':
     ensure  =>  directory,
     owner   =>  'root',
     group   =>  'root',
@@ -19,7 +19,7 @@ file { "/usr/java":
 } ->
 
 # Ensure the softlink to default java exists
-file { "/usr/java/default":
+file { '/usr/java/default':
     ensure  =>  'link',
     target  =>  '/usr/lib/jvm/java-7-openjdk-amd64',
     require => Package['openjdk-7-jdk'],

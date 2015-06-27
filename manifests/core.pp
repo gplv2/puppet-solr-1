@@ -26,27 +26,28 @@ class solr::core(
   $core_name = $solr::params::core_name,
 ) inherits solr::params {
 
-  # using the 'creates' option here against the finished product so we only download this once
-  #  wget http://apache.cu.be/lucene/solr/5.2.1/solr-5.2.1.tgz
+  # using the 'creates' option here against the
+  # finished product so we only download this once
+  # wget http://apache.cu.be/lucene/solr/5.2.1/solr-5.2.1.tgz
   # http://192.168.1.111/solr/solr-5.2.1.tgz
 
   #$solr_tgz_url = "http://${apache_mirror}/lucene/solr/${solr_version}/solr-${solr_version}.tgz"
   $solr_tgz_url = "http://192.168.1.111/solr/solr-${solr_version}.tgz"
-  exec { "wget solr":
+  exec { 'wget solr':
     command => "wget --output-document=/usr/local/src/solr-${solr_version}.tgz ${solr_tgz_url}",
     creates => "${solr_home}/solr-${solr_version}",
   } ->
 
-  user { "solr":
+  user { 'solr':
     ensure => present
   } ->
- 
-  file { "/opt/solr":
+
+  file { '/opt/solr':
     ensure => directory,
     owner  => solr,
   } ->
-  
-  exec { "untar solr":
+
+  exec { 'untar solr':
     command => "tar -xzf /usr/local/src/solr-${solr_version}.tgz -C ${solr_home}",
     creates => "${solr_home}/solr-${solr_version}",
   } ->
@@ -60,41 +61,41 @@ class solr::core(
   # defaults if solr_conf is not provided
   # data will go to /var/lib/solr
   # conf will go to /etc/solr
-  file { "/etc/solr":
+  file { '/etc/solr':
     ensure => directory,
     owner  => solr,
   } ->
 
-  file { "/etc/solr/solr.xml":
+  file { '/etc/solr/solr.xml':
     ensure => present,
-    source => "puppet:///modules/solr/solr.xml",
+    source => 'puppet:///modules/solr/solr.xml',
     owner  => solr,
   } ->
 
-  file { "/etc/solr/collection1":
+  file { '/etc/solr/collection1':
     ensure => directory,
     owner  => solr,
   } ->
 
-  file { "/etc/solr/collection1/conf":
+  file { '/etc/solr/collection1/conf':
     ensure => directory,
     owner  => solr,
   } ->
 
-  file { "/var/lib/solr":
+  file { '/var/lib/solr':
     ensure => directory,
     owner  => solr,
   } ->
 
-  file { "/var/lib/solr/collection1":
+  file { '/var/lib/solr/collection1':
     ensure => directory,
     owner  => solr,
   } ->
 
-  exec { "copy core files to collection1":
-    command => "cp -rf /opt/solr/current/example/solr/collection1/* /etc/solr/collection1/",
+  exec { 'copy core files to collection1':
+    command => 'cp -rf /opt/solr/current/example/solr/collection1/* /etc/solr/collection1/',
     user    => solr,
-    creates => "/etc/solr/collection1/conf/schema.xml"
+    creates => '/etc/solr/collection1/conf/schema.xml'
   }
 }
 
