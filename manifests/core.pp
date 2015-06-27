@@ -47,6 +47,11 @@ class solr::core(
     owner  => solr,
   } ->
 
+  file { '/data/solr':
+    ensure => directory,
+    owner  => solr,
+  } ->
+
   exec { 'untar solr':
     command => "tar -xzf /usr/local/src/solr-${solr_version}.tgz -C ${solr_home}",
     creates => "${solr_home}/solr-${solr_version}",
@@ -83,6 +88,11 @@ class solr::core(
   } ->
 
   file { '/var/lib/solr':
+    ensure => directory,
+    owner  => solr,
+  } ->
+
+  file { '/data/solr/collection1':
     ensure => directory,
     owner  => solr,
   } ->
