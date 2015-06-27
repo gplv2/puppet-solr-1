@@ -87,24 +87,24 @@ class solr::tomcat6(
   }
 
   # prep required solr libs for tomcat
-  exec { "cp /opt/solr/example/lib/ext/* ${tomcat6_home}/tomcat6/lib/":
+  exec { "cp ${solr_home}/current/example/lib/ext/* ${tomcat6_home}/tomcat6/lib/":
     path    => '/bin',
     creates => "${tomcat6_home}/tomcat6/lib/log4j-1.2.16.jar",
     require => [ Class['solr::core'], File["${tomcat6_home}/tomcat6"]]
   }
 
   # stage the solr war file for tomcat
-  exec { "cp /opt/solr/dist/${solr_war_file} /etc/solr/solr.war":
+  exec { "cp ${solr_home}/current/dist/${solr_war_file} /etc/solr/solr.war":
     path    => '/bin',
     creates => '/etc/solr/solr.war',
-    require => Exec["cp /opt/solr/example/lib/ext/* ${tomcat6_home}/tomcat6/lib/"],
+    require => Exec["cp ${solr_home}/current/example/lib/ext/* ${tomcat6_home}/tomcat6/lib/"],
   }
 
 
   service { 'tomcat6-solr':
     ensure  => running,
     require => [
-      Exec["cp /opt/solr/dist/${solr_war_file} /etc/solr/solr.war"],
+      Exec["cp ${solr_home}/current/dist/${solr_war_file} /etc/solr/solr.war"],
       File['/etc/init.d/tomcat6-solr'],
       File["${tomcat6_home}/tomcat6/bin/setenv.sh"]
       ]
