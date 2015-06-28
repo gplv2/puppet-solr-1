@@ -35,6 +35,11 @@ class solr::core(
   #$solr_tgz_url = "http://${apache_mirror}/lucene/solr/${solr_version}/solr-${solr_version}.tgz"
   $solr_tgz_url = "http://192.168.1.111/solr/solr-${solr_version}.tgz"
 
+  file { '/data':
+    ensure => directory,
+    owner  => root,
+  } ->
+
   user { 'solr':
     ensure => present
   } ->
@@ -78,11 +83,6 @@ class solr::core(
     source => 'puppet:///modules/solr/solr.xml',
     owner  => solr,
   }
-
-  file { '/data':
-    ensure => directory,
-    owner  => root,
-  } ->
 
   if $solr_version < '5.0.0' {
     file { '/etc/solr/collection1':
