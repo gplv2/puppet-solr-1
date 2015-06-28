@@ -25,7 +25,6 @@ class solr::core(
   $apache_mirror = $solr::params::apache_mirror,
   $core_name = $solr::params::core_name,
 ) inherits solr::params {
-
   # using the 'creates' option here against the
   # finished product so we only download this once
   # wget http://apache.cu.be/lucene/solr/5.2.1/solr-5.2.1.tgz
@@ -33,6 +32,12 @@ class solr::core(
 
   #$solr_tgz_url = "http://${apache_mirror}/lucene/solr/${solr_version}/solr-${solr_version}.tgz"
   $solr_tgz_url = "http://192.168.1.111/solr/solr-${solr_version}.tgz"
+
+  file { "${solr_home}":
+    ensure => directory,
+    owner  => solr,
+  } ->
+
   exec { 'wget solr':
     command => "wget --output-document=/usr/local/src/solr-${solr_version}.tgz ${solr_tgz_url}",
     creates => "${solr_home}/solr-${solr_version}",
@@ -40,11 +45,6 @@ class solr::core(
 
   user { 'solr':
     ensure => present
-  } ->
-
-  file { '/opt/solr':
-    ensure => directory,
-    owner  => solr,
   } ->
 
   file { '/data/solr':
@@ -91,7 +91,6 @@ class solr::core(
     file { '/etc/solr/collection1':
         ensure  => directory,
         owner   => solr,
-        require => File['/var/lib/solr'],
     } ->
 
     file { '/etc/solr/collection1/conf':
@@ -113,13 +112,17 @@ class solr::core(
         user    => solr,
         creates => '/etc/solr/collection1/conf/schema.xml'
     }
-  }
-  if $solr_version > '5.0.0' {
-    exec { 'create example with solr binary':
-        command => "${solr_home}/current/bin/solr start -e techproducts",
-        user    => root,
-        require => File['/var/lib/solr'],
-    }
+  } else {
+     if $solr_version >= '5.0.0' {
+        file { '/etc/solr/techproducts':
+            ensure  => directory,
+            owner   => solr,
+        } ->
+        exec { 'create example with solr binary':
+           command => "${solr_home}/current/bin/solr start -e techproducts",
+           user    => root,
+        }
+     }
   }
 }
 
