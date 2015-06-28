@@ -36,7 +36,7 @@ class solr::tomcat6(
   $solr_war_file = "solr-${solr_version}.war"
 
   exec { 'wget tomcat':
-    command => "wget --output-document=/tmp/apache-tomcat-${tomcat6_version}.tgz http://$::{apache_mirror}/tomcat/tomcat-6/v${tomcat6_version}/bin/apache-tomcat-${tomcat6_version}.tar.gz",
+    command => "wget --output-document=/tmp/apache-tomcat-${tomcat6_version}.tgz http://$::apache_mirror/tomcat/tomcat-6/v${tomcat6_version}/bin/apache-tomcat-${tomcat6_version}.tar.gz",
     creates => "${tomcat6_home}/tomcat-${tomcat6_version}"
   } ->
 
@@ -52,7 +52,7 @@ class solr::tomcat6(
   } ->
 
   file { "/${tomcat6_home}/apache-tomcat-${tomcat6_version}":
-    ensure  => directory
+    ensure  => directory,
     owner   => solr,
     recurse => true,
   } ->
