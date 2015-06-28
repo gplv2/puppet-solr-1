@@ -100,7 +100,6 @@ class solr::tomcat6(
     require => Exec["cp ${solr_home}/current/example/lib/ext/* ${tomcat6_home}/tomcat6/lib/"],
   }
 
-
   service { 'tomcat6-solr':
     ensure  => running,
     require => [

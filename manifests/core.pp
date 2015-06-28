@@ -61,7 +61,7 @@ class solr::core(
     ensure => link,
     target => "${solr_home}/solr-${solr_version}",
     owner  => solr,
-  }
+  } ->
 
   # defaults if solr_conf is not provided
   # data will go to /var/lib/solr
@@ -87,10 +87,11 @@ class solr::core(
     owner  => solr,
   }
 
-  if $solr_version < "5.0.0" {
+  if $solr_version < '5.0.0' {
     file { '/etc/solr/collection1':
-        ensure => directory,
-        owner  => solr,
+        ensure  => directory,
+        owner   => solr,
+        require => File['/var/lib/solr'],
     } ->
 
     file { '/etc/solr/collection1/conf':
@@ -108,15 +109,16 @@ class solr::core(
     } ->
 
     exec { 'copy core files to collection1':
-        command => 'cp -rf /opt/solr/current/example/solr/collection1/* /etc/solr/collection1/',
+        command => "cp -rf ${solr_home}/current/example/solr/collection1/* /etc/solr/collection1/",
         user    => solr,
         creates => '/etc/solr/collection1/conf/schema.xml'
     }
   }
-  if $solr_version > "5.0.0" {
+  if $solr_version > '5.0.0' {
     exec { 'create example with solr binary':
-        command => 'cd ${solr_home} && bin/solr start -e techproducts',
-        user    => solr,
+        command => "${solr_home}/current/bin/solr start -e techproducts",
+        user    => root,
+        require => File['/var/lib/solr'],
     }
   }
 }
