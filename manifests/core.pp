@@ -30,8 +30,14 @@ class solr::core(
   # wget http://apache.cu.be/lucene/solr/5.2.1/solr-5.2.1.tgz
   # http://192.168.1.111/solr/solr-5.2.1.tgz
 
+#==> trusty64-jetty: (Exec[untar solr] => File[/opt/solr/current] => File[/etc/solr] => File[/etc/solr/solr.xml] => File[/data] => File[/data/solr] => Exec[untar solr])
+
   #$solr_tgz_url = "http://${apache_mirror}/lucene/solr/${solr_version}/solr-${solr_version}.tgz"
   $solr_tgz_url = "http://192.168.1.111/solr/solr-${solr_version}.tgz"
+
+  user { 'solr':
+    ensure => present
+  } ->
 
   file { "${solr_home}":
     ensure => directory,
@@ -41,10 +47,6 @@ class solr::core(
   exec { 'wget solr':
     command => "wget --output-document=/usr/local/src/solr-${solr_version}.tgz ${solr_tgz_url}",
     creates => "${solr_home}/solr-${solr_version}",
-  } ->
-
-  user { 'solr':
-    ensure => present
   } ->
 
   file { '/data/solr':
@@ -61,7 +63,7 @@ class solr::core(
     ensure => link,
     target => "${solr_home}/solr-${solr_version}",
     owner  => solr,
-  } ->
+  }
 
   # defaults if solr_conf is not provided
   # data will go to /var/lib/solr
@@ -75,14 +77,14 @@ class solr::core(
     ensure => present,
     source => 'puppet:///modules/solr/solr.xml',
     owner  => solr,
-  } ->
+  }
 
   file { '/data':
     ensure => directory,
     owner  => root,
   } ->
 
-  file { '/var/lib/solr':
+  file { '/data/solr':
     ensure => directory,
     owner  => solr,
   }
