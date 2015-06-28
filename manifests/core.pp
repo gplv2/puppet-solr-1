@@ -115,9 +115,8 @@ class solr::core(
   }
   if $solr_version > "5.0.0" {
     exec { 'create example with solr binary':
-        command => 'cp -rf /opt/solr/current/example/solr/collection1/* /etc/solr/collection1/',
+        command => 'cd ${solr_home} && bin/solr start -e techproducts',
         user    => solr,
-        creates => '/etc/solr/collection1/conf/schema.xml'
     }
   }
 }
