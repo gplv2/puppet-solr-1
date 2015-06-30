@@ -98,11 +98,6 @@ class solr::core(
            owner  => solr,
   } ->
 
-  file { '/var/lib/solr/collection1':
-    ensure => directory,
-           owner  => solr,
-  } ->
-
   exec { 'copy core files to collection1':
     command => "cp -rf ${solr_home}/current/example/solr/collection1/* /etc/solr/collection1/",
             user    => solr,
