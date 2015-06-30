@@ -19,7 +19,8 @@ class solr::jetty(
 ) inherits solr::params {
 
   class { 'solr::core':
-  core_name => $core_name }
+    core_name => $core_name 
+  }
 
   if $::operatingsystem == 'Ubuntu' {
       exec { 'load init.d into upstart':
