@@ -15,6 +15,16 @@ package { 'libtomcat7-java':
     ensure => present,
 } ->
 
+package { 'build-essential':
+    ensure => present,
+} ->
+package { 'devscripts':
+    ensure => present,
+} ->
+package { 'debhelper':
+    ensure => present,
+} ->
+
 file { '/usr/java':
     ensure  =>  directory,
     owner   =>  'root',

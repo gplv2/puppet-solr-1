@@ -99,7 +99,7 @@ class solr::core(
   } ->
 
   exec { 'copy core files to multicore':
-    command => "cp -rf ${solr_home}/current/example/solr/multicore/* /etc/solr/multicore/",
+    command => "cp -rf ${solr_home}/current/example/multicore/* /etc/solr/multicore/",
     user    => solr,
 #    creates => '/etc/solr/multicore/conf/solr.xml'
   }

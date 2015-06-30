@@ -23,6 +23,8 @@ Vagrant.configure("2") do |config|
     ].each do |vm_info|
       config.vm.define "#{vm_info[:name]}-#{puppet_base}" do |custom|
         custom.vm.network :forwarded_port, guest: 8983, host: vm_info[:port]
+        v.memory = 1024
+        v.cpus = 2
         custom.vm.box = vm_info[:name]
         custom.vm.box_url = vm_info[:url]
         custom.vm.provision :puppet do |puppet|
