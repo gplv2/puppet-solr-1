@@ -9,7 +9,7 @@ Vagrant.configure("2") do |config|
          name: "trusty64",
          url: "https://atlas.hashicorp.com/ubuntu/boxes/trusty64/versions/20150609.0.10/providers/virtualbox.box",
          port: 8985,
-         cpu: 2,
+         cpu: 4,
          mem: 2048
       },
       {
