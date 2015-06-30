@@ -36,8 +36,8 @@ class solr::core(
   $solr_tgz_url = "http://192.168.1.111/solr/solr-${solr_version}.tgz"
 
   file { '/data':
-      ensure => directory,
-      owner  => root,
+    ensure => directory,
+    owner  => root,
   } ->
 
   user { 'solr':
@@ -46,66 +46,61 @@ class solr::core(
 
   file { '/data/solr':
     ensure => directory,
-           owner  => solr,
+    owner  => solr,
   } ->
 
   file { "${solr_home}":
     ensure => directory,
-           owner  => solr,
+    owner  => solr,
   } ->
 
   exec { 'wget solr':
     command => "wget --output-document=/usr/local/src/solr-${solr_version}.tgz ${solr_tgz_url}",
-            creates => "${solr_home}/solr-${solr_version}",
+    creates => "${solr_home}/solr-${solr_version}",
   } ->
 
   exec { 'untar solr':
     command => "tar -xzf /usr/local/src/solr-${solr_version}.tgz -C ${solr_home}",
-            creates => "${solr_home}/solr-${solr_version}",
+    creates => "${solr_home}/solr-${solr_version}",
   } ->
 
   file { "${solr_home}/current":
     ensure => link,
-           target => "${solr_home}/solr-${solr_version}",
-           owner  => solr,
+    target => "${solr_home}/solr-${solr_version}",
+    owner  => solr,
   }
 
 # defaults if solr_conf is not provided
-# data will go to /var/lib/solr
+# data will go to /data/solr
 # conf will go to /etc/solr
   file { '/etc/solr':
     ensure => directory,
-           owner  => solr,
+    owner  => solr,
   } ->
 
-  file { '/etc/solr/solr.xml':
-    ensure => present,
-           source => 'puppet:///modules/solr/solr.xml',
-           owner  => solr,
-  } ->
-  file { '/etc/solr/collection1':
+#  file { '/etc/solr/solr.xml':
+#    ensure => present,
+#           source => 'puppet:///modules/solr/solr.xml',
+#           owner  => solr,
+#  } ->
+  file { '/etc/solr/multicore':
     ensure  => directory,
-            owner   => solr,
-            require => Exec['untar solr']
+    owner   => solr,
+    require => Exec['untar solr']
   } ->
 
-  file { '/etc/solr/collection1/conf':
+#  file { '/etc/solr/multicore/conf':
+#    ensure => directory,
+#    owner  => solr,
+#  } ->
+  file { '/data/solr/multicore':
     ensure => directory,
-           owner  => solr,
-  } ->
-  file { '/data/solr/collection1':
-    ensure => directory,
-           owner  => solr,
-  } ->
-
-  file { '/var/lib/solr/collection1':
-    ensure => directory,
-           owner  => solr,
+    owner  => solr,
   } ->
 
-  exec { 'copy core files to collection1':
-    command => "cp -rf ${solr_home}/current/example/solr/collection1/* /etc/solr/collection1/",
-            user    => solr,
-            creates => '/etc/solr/collection1/conf/schema.xml'
+  exec { 'copy core files to multicore':
+    command => "cp -rf ${solr_home}/current/example/solr/multicore/* /etc/solr/multicore/",
+    user    => solr,
+#    creates => '/etc/solr/multicore/conf/solr.xml'
   }
 }
