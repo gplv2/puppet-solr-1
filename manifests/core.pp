@@ -78,29 +78,34 @@ class solr::core(
     owner  => solr,
   } ->
 
-#  file { '/etc/solr/solr.xml':
-#    ensure => present,
-#           source => 'puppet:///modules/solr/solr.xml',
-#           owner  => solr,
-#  } ->
-  file { '/etc/solr/multicore':
+  file { '/etc/solr/solr.xml':
+    ensure => present,
+    source => 'puppet:///modules/solr/solr.xml',
+    owner  => solr,
+  } ->
+  file { '/etc/solr/collection1':
     ensure  => directory,
     owner   => solr,
     require => Exec['untar solr']
   } ->
 
-#  file { '/etc/solr/multicore/conf':
-#    ensure => directory,
-#    owner  => solr,
-#  } ->
-  file { '/data/solr/multicore':
+  file { '/etc/solr/collection1/conf':
     ensure => directory,
-    owner  => solr,
+           owner  => solr,
+  } ->
+  file { '/data/solr/collection1':
+    ensure => directory,
+           owner  => solr,
   } ->
 
-  exec { 'copy core files to multicore':
-    command => "cp -a ${solr_home}/current/example/multicore/ /etc/solr/multicore/",
-    user    => solr,
-#    creates => '/etc/solr/multicore/conf/solr.xml'
+  file { '/var/lib/solr/collection1':
+    ensure => directory,
+           owner  => solr,
+  } ->
+
+  exec { 'copy core files to collection1':
+    command => "cp -rf ${solr_home}/current/example/solr/collection1/* /etc/solr/collection1/",
+            user    => solr,
+            creates => '/etc/solr/collection1/conf/schema.xml'
   }
 }
