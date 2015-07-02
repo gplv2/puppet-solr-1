@@ -33,7 +33,8 @@ class solr::core(
 #==> trusty64-jetty: (Exec[untar solr] => File[/opt/solr/current] => File[/etc/solr] => File[/etc/solr/solr.xml] => File[/data] => File[/data/solr] => Exec[untar solr])
 
 #$solr_tgz_url = "http://${apache_mirror}/lucene/solr/${solr_version}/solr-${solr_version}.tgz"
-  $solr_tgz_url = "http://192.168.1.111/solr/solr-${solr_version}.tgz"
+  #$solr_tgz_url = "http://192.168.1.111/solr/solr-${solr_version}.tgz"
+  $solr_tgz_url = "http://192.168.1.111/solr/solr-jetty_4.10-1.deb"
 
   file { '/data':
     ensure => directory,
@@ -44,10 +45,10 @@ class solr::core(
     ensure => present
   } ->
 
-  file { '/data/solr':
-    ensure => directory,
-    owner  => solr,
-  } ->
+#  file { '/data/solr':
+#    ensure => directory,
+#    owner  => solr,
+#  } ->
 
   file { "${solr_home}":
     ensure => directory,
@@ -55,52 +56,52 @@ class solr::core(
   } ->
 
   exec { 'wget solr':
-    command => "wget --output-document=/usr/local/src/solr-${solr_version}.tgz ${solr_tgz_url}",
+    command => "wget --output-document=/usr/local/src/ ${solr_tgz_url}",
+#    creates => "${solr_home}/solr-${solr_version}",
+  } ->
+
+  exec { 'dpkg solr':
+    command => "dpkg -i /usr/local/src/solr-jetty_4.10-1.deb",
     creates => "${solr_home}/solr-${solr_version}",
   } ->
 
-  exec { 'untar solr':
-    command => "tar -xzf /usr/local/src/solr-${solr_version}.tgz -C ${solr_home}",
-    creates => "${solr_home}/solr-${solr_version}",
-  } ->
-
-  file { "${solr_home}/current":
-    ensure => link,
-    target => "${solr_home}/solr-${solr_version}",
-    owner  => solr,
-  }
+#  file { "${solr_home}/current":
+#    ensure => link,
+#    target => "${solr_home}/solr-${solr_version}",
+#    owner  => solr,
+#  }
 
 # defaults if solr_conf is not provided
 # data will go to /data/solr
 # conf will go to /etc/solr
-  file { '/etc/solr':
-    ensure => directory,
-    owner  => solr,
-  } ->
+#  file { '/etc/solr':
+#    ensure => directory,
+#    owner  => solr,
+#  } ->
 
-  file { '/etc/solr/solr.xml':
-    ensure => present,
-    source => 'puppet:///modules/solr/solr.xml',
-    owner  => solr,
-  } ->
-  file { '/etc/solr/collection1':
-    ensure  => directory,
-    owner   => solr,
-    require => Exec['untar solr']
-  } ->
+#  file { '/etc/solr/solr.xml':
+#    ensure => present,
+#    source => 'puppet:///modules/solr/solr.xml',
+#    owner  => solr,
+#  } ->
+#  file { '/etc/solr/collection1':
+##    ensure  => directory,
+#    owner   => solr,
+#    require => Exec['dpkg solr']
+#  } ->
+#
+#  file { '/etc/solr/collection1/conf':
+#    ensure => directory,
+#    owner  => solr,
+#  } ->
+#  file { '/data/solr/collection1':
+#    ensure => directory,
+#    owner  => solr,
+#  } ->
 
-  file { '/etc/solr/collection1/conf':
-    ensure => directory,
-           owner  => solr,
-  } ->
-  file { '/data/solr/collection1':
-    ensure => directory,
-           owner  => solr,
-  } ->
-
-  exec { 'copy core files to collection1':
-    command => "cp -rf ${solr_home}/current/example/solr/collection1/* /etc/solr/collection1/",
-            user    => solr,
-            creates => '/etc/solr/collection1/conf/schema.xml'
-  }
+#  exec { 'copy core files to collection1':
+#    command => "cp -rf ${solr_home}/current/example/solr/collection1/* /etc/solr/collection1/",
+#    user    => solr,
+#    creates => '/etc/solr/collection1/conf/schema.xml'
+#  }
 }
