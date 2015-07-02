@@ -56,15 +56,14 @@ class solr::core(
   } ->
 
   exec { 'wget solr':
-    command => "wget --output-document=/usr/local/src/ ${solr_tgz_url}",
+    command => "wget --directory-prefix=/usr/local/src/ ${solr_tgz_url}",
 #    creates => "${solr_home}/solr-${solr_version}",
   } ->
 
   exec { 'dpkg solr':
     command => "dpkg -i /usr/local/src/solr-jetty_4.10-1.deb",
     creates => "${solr_home}/solr-${solr_version}",
-  } ->
-
+  }
 #  file { "${solr_home}/current":
 #    ensure => link,
 #    target => "${solr_home}/solr-${solr_version}",

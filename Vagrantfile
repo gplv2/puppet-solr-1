@@ -50,5 +50,6 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.synced_folder ".", "/etc/puppet/modules/solr"
+  config.vm.synced_folder ".", "/home/glenn/solr-jetty_4.10-1"
 
 end
