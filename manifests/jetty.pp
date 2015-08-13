@@ -17,20 +17,9 @@ class solr::jetty(
   $zookeeper_hosts = $solr::params::zookeeper_hosts,
   $core_name = $solr::params::core_name,
 ) inherits solr::params {
-
   class { 'solr::core':
     core_name => $core_name 
   }
-
-#  if $::operatingsystem == 'Ubuntu' {
-#      exec { 'load init.d into upstart':
-#        command => 'update-rc.d solr defaults',
-#        user    => 'root',
-#        onlyif  => "test 7 != `ls -al /etc/rc*.d | grep solr | wc | awk '{print \$1}'`",
-#        require => [File['/etc/init.d/solr'], Class['solr::core']]
-#        # checks if solr service is enabled
-#      }
-#  }
 
 #  file { '/etc/init.d/solr':
 #    ensure => present,
@@ -38,6 +27,9 @@ class solr::jetty(
 #    source => 'puppet:///modules/solr/solr',
 #    owner  => 'root',
 #  } ->
+  package { 'solrjetty':
+      ensure => present,
+  } ->
 
 #  file { '/etc/default/solr-jetty':
 #    ensure  => present,
@@ -49,5 +41,4 @@ class solr::jetty(
     ensure  => running,
     require => Class['solr::core']
   }
-
 }

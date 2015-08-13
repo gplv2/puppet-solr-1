@@ -10,5 +10,6 @@
 #
 # include "solr"
 class solr () {
+  include solr::repo
   include solr::jetty
 }

@@ -3,25 +3,15 @@ case $::operatingsystem {
   debian, ubuntu: { $java_name = 'openjdk-7-jdk' }
 }
 
-exec { 'apt-get update':
-    path => '/usr/bin',
-} ->
+#exec { 'apt-get update':
+#    path => '/usr/bin',
+#} ->
 
 package { $java_name :
     ensure => present,
 } ->
 
 package { 'libtomcat7-java':
-    ensure => present,
-} ->
-
-package { 'build-essential':
-    ensure => present,
-} ->
-package { 'devscripts':
-    ensure => present,
-} ->
-package { 'debhelper':
     ensure => present,
 } ->
 
