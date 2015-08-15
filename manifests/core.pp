@@ -36,7 +36,7 @@ class solr::core(
     owner   => jetty,
     group   => jetty,
 #   notify => Exec["restart-jetty"];
-    require => Service["jetty"],
+    require => Service["solr"],
   }
 
 
