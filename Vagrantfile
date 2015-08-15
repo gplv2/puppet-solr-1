@@ -3,7 +3,7 @@
 
 Vagrant.configure("2") do |config|
 
-  ["jetty", "tomcat"].each do |puppet_base|
+  ["jetty"].each do |puppet_base|
     [
       {
          name: "trusty64",
