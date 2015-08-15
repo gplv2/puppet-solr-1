@@ -28,7 +28,8 @@ class solr::jetty(
 #    owner  => 'root',
 #  } ->
   package { 'solrjetty':
-      ensure => present,
+      ensure  => present,
+      require => [Apt::Source['trusty-solrjetty']]
   } ->
 
 #  file { '/etc/default/solr-jetty':
