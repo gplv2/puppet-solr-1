@@ -37,8 +37,8 @@ Vagrant.configure("2") do |config|
 
         # Add the puppetlabs stdlib module
         # Install it to non default path, since /etc/puppet/modules is linked to the host file system
-        custom.vm.provision "shell",
-            inline: "puppet module install puppetlabs/stdlib --modulepath=/usr/share/puppet/modules"
+#        custom.vm.provision "shell",
+#            inline: "puppet module install puppetlabs/stdlib --modulepath=/usr/share/puppet/modules"
 
         custom.vm.network :forwarded_port, guest: 8983, host: vm_info[:port]
         custom.vm.box = vm_info[:name]
@@ -46,10 +46,10 @@ Vagrant.configure("2") do |config|
 
         custom.vm.provision :puppet do |puppet|
           puppet.manifests_path  = "."
-          puppet.module_path  = "modules:/usr/share/puppet/modules"
+          puppet.module_path  = "modules"
           puppet.manifest_file  = "#{puppet_base}.pp"
-#          puppet.options = ['--verbose','--debug']
-          puppet.options = ['--verbose']
+          puppet.options = ['--verbose','--debug']
+#          puppet.options = ['--verbose']
         end
       end
     end
