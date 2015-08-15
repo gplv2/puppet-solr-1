@@ -35,6 +35,5 @@ class solr::jetty(
   service {'solr':
     ensure  => running,
     require => Class['solr::core']
-  } ->
-
+  }
 }
