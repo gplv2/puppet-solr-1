@@ -3,10 +3,6 @@ case $::operatingsystem {
   debian, ubuntu: { $java_name = 'openjdk-7-jdk' }
 }
 
-#exec { 'apt-get update':
-#    path => '/usr/bin',
-#} ->
-
 package { $java_name :
     ensure => present,
 } ->

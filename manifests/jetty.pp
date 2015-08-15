@@ -32,14 +32,19 @@ class solr::jetty(
       require => [Apt::Source['trusty-solrjetty']]
   } ->
 
-#  file { '/etc/default/solr-jetty':
-#    ensure  => present,
-#    content => template('solr/solr-jetty.erb'),
-#    owner   => 'root',
-#  } ->
-
   service {'solr':
     ensure  => running,
     require => Class['solr::core']
+  } ->
+
+  file { '/etc/solr/':
+    source  => "puppet:///files/etc/solr/cores",
+#   require => File["/etc/solr"],
+    ensure  => directory,
+    recurse => true,
+    purge   => false,
+    mode    => 0644,
+    owner   => jetty,
+    group   => jetty,
+#   notify => Exec["restart-jetty"];
   }
-}

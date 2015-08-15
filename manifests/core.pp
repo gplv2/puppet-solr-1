@@ -16,7 +16,7 @@
 # == Sample Usage:
 #
 #   class {'solr::core':
-#     solr_version           => '5.2.1'
+#     solr_version           => '4.10.4'
 #   }
 #
 class solr::core(
