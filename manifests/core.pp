@@ -27,7 +27,7 @@ class solr::core(
   ) inherits solr::params {
 
  file { '/etc/solr/':
-    source  => "puppet:///files/etc/solr/cores/*",
+    source  => "puppet:///module/files/etc/solr/cores/*",
 #   require => File["/etc/solr"],
     ensure  => directory,
     recurse => true,
