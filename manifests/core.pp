@@ -26,6 +26,20 @@ class solr::core(
   $core_name = $solr::params::core_name,
   ) inherits solr::params {
 
+ file { '/etc/solr/':
+    source  => "puppet:///files/etc/solr/cores",
+#   require => File["/etc/solr"],
+    ensure  => directory,
+    recurse => true,
+    purge   => false,
+    mode    => 0644,
+    owner   => jetty,
+    group   => jetty,
+#   notify => Exec["restart-jetty"];
+    require => Service["jetty"],
+  }
+
+
 #  file { '/data':
 #    ensure => directory,
 #    owner  => root,
