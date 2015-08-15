@@ -9,7 +9,6 @@ case $::operatingsystem {
 
 package { $java_name :
     ensure => present,
-    require  => Exec['apt-get update']
 } ->
 
 package { 'libtomcat7-java':

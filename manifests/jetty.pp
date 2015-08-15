@@ -29,7 +29,6 @@ class solr::jetty(
 #  } ->
   package { 'solrjetty':
       ensure => present,
-      require  => Exec['apt-get update']
   } ->
 
 #  file { '/etc/default/solr-jetty':

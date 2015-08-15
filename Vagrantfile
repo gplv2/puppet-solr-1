@@ -35,10 +35,14 @@ Vagrant.configure("2") do |config|
             v.customize ["modifyvm", :id, "--cpus", vm_info[:cpu]]
         end
 
-        # Add the puppetlabs stdlib module
-        # Install it to non default path, since /etc/puppet/modules is linked to the host file system
+# Add the puppetlabs stdlib module
+# Install it to non default path, since /etc/puppet/modules is linked to the host file system
 #        custom.vm.provision "shell",
 #            inline: "puppet module install puppetlabs/stdlib --modulepath=/usr/share/puppet/modules"
+# Puppet doesnt seem to be abble to find the path.  Moved to puppet code as submodule which is 
+# a problem, as standalone we need those modules for vagrant, but not on puppetmaster
+
+        custom.vm.provision :shell, :inline => "apt-get update --fix-missing"
 
         custom.vm.network :forwarded_port, guest: 8983, host: vm_info[:port]
         custom.vm.box = vm_info[:name]

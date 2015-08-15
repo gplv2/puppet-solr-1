@@ -46,7 +46,14 @@ class { "solr::tomcat6":
 For more tomcat configuration options see the tomcat6.pp file in
 manifests.
 
+Vagrant testing 
+---------------
 
+retry a puppet apply run:
+
+   /usr/bin/ruby /usr/bin/puppet apply --verbose --debug --modulepath /tmp/vagrant-puppet/modules-14cf72675f3ef26a2925e2485cd1dd79:/etc/puppet/modules --detailed-exitcodes --manifestdir /tmp/vagrant-puppet/manifests-5058f1af8388633f609cadb75a75dc9d /tmp/vagrant-puppet/manifests-5058f1af8388633f609cadb75a75dc9d/jetty.pp
+
+adjust the uuid's.
 
 Working with Solr Cloud
 -----------------------
