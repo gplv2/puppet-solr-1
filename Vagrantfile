@@ -35,6 +35,11 @@ Vagrant.configure("2") do |config|
             v.customize ["modifyvm", :id, "--cpus", vm_info[:cpu]]
         end
 
+        # Add the puppetlabs stdlib module
+        # Install it to non default path, since /etc/puppet/modules is linked to the host file system
+        custom.vm.provision "shell",
+            inline: "puppet module install puppetlabs/stdlib --modulepath=/usr/share/puppet/modules"
+
         custom.vm.network :forwarded_port, guest: 8983, host: vm_info[:port]
         custom.vm.box = vm_info[:name]
         custom.vm.box_url = vm_info[:url]
