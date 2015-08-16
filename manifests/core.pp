@@ -38,9 +38,14 @@ class solr::core(
     owner   => solr,
     group   => solr,
     source  => "puppet:///modules/solr/etc/solr/cores/${core_name}/",
-#   notify => Exec["restart-jetty"];
+    notify => Exec["load-${core_name}"];
   }
 
+  exec { 'load-${core_name}':
+    command => "sh ${solr_home}/curl",
+    user    => solr,
+#    creates => '/etc/solr/<core_name>/conf/schema.xml'
+  }
 
 #  file { '/data':
 #    ensure => directory,
