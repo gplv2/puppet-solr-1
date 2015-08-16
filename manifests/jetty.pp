@@ -27,7 +27,15 @@ class solr::jetty(
   } ->
 
   service {'solr':
-    ensure  => running,
-    require => Class['solr::core']
+    ensure    => running,
+    enable    => true,
+    status    => "/etc/init.d/solr start",
+    restart   => "/etc/init.d/solr restart",
+    start     => "/etc/init.d/solr check",
+    stop      => "/etc/init.d/solr stop",
+    hasstatus => true,
+    hasrestart => true,
+    pattern => "/usr/bin/java -Dsolr.solr.home",
+    require => Class['solr::base']
   }
 }
