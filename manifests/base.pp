@@ -30,15 +30,16 @@ class solr::base(
     } ->
 
     file { '/data/solr':
-      ensure => directory,
-      owner  => solr,
+      ensure  => directory,
+      require => Package['solrjetty'],
+      owner   => solr,
     } ->
 
     user { 'solr':
       ensure => present
     } ->
 
-    file { $solr_home:
+    file { "${solr_home}":
       ensure => directory,
       owner  => solr,
     }

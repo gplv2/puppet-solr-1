@@ -12,5 +12,4 @@
 class solr () {
   include solr::repo
   include solr::jetty
-  include solr::core
-}
+  }
