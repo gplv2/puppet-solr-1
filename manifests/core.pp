@@ -41,8 +41,8 @@ class solr::core(
     notify => Exec["load-${core_name}"];
   }
 
-  exec { 'load-${core_name}':
-    command => "sh ${solr_home}/curl",
+  exec { "load-${core_name}":
+    command => "sh ${solr_home}/${core_name}/curl",
     user    => solr,
 #    creates => '/etc/solr/<core_name>/conf/schema.xml'
   }
