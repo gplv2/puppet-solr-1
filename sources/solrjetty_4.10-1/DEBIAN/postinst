@@ -1,0 +1,66 @@
+#!/bin/sh 
+
+set -e
+
+adduser --system --disabled-password --disabled-login --home /opt/solr/current \
+        --no-create-home --quiet --force-badname --group solr
+
+# If proper permissions for the stuff under /var/lib/solr haven't
+# been set, set them now
+case "$1" in
+    configure)
+
+        if ! dpkg-statoverride --quiet --list /var/lib/solr > /dev/null; then
+            dpkg-statoverride --quiet --update --add solr solr 0750 /var/lib/solr
+        fi
+
+#        if ! dpkg-statoverride --quiet --list /var/lib/solr/data > /dev/null ; then
+#            dpkg-statoverride --quiet --update --add solr root 0750 /var/lib/solr/data 
+#        fi
+
+        if [ -d /var/lib/solr/ ]; then
+            chown -R solr:solr /var/lib/solr/
+        fi
+
+        if [ -d /data/solr/ ]; then
+            chown -R solr:solr /data/solr/
+        fi
+
+        if [ -d /etc/solr/ ]; then
+            chown -R solr:solr /etc/solr/
+        fi
+
+        if [ -d /opt/solr/ ]; then
+            chown -R solr:solr /opt/solr/
+        fi
+
+        if [ -x "/etc/init.d/solr" ]; then
+            update-rc.d solr defaults >/dev/null
+            if [ -x "`which invoke-rc.d 2>/dev/null`" ]; then
+               invoke-rc.d solr start || true
+            else
+               /etc/init.d/solr start || true
+            fi
+        fi
+
+#        invoke-rc.d --quiet solr restart || {
+#            RESULT=$?
+#            # Ignore if solr init script does not exist (yet)
+#            if [ $RESULT != 100 ]; then
+#                exit $RESULT
+#            fi
+#        }
+    ;;
+    abort-upgrade|abort-remove|abort-deconfigure)
+
+    ;;
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+
+esac
+
+#DEBHELPER#
+
+exit 0

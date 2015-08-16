@@ -1,0 +1,39 @@
+Establishing start.log on Tue Jun 30 14:57:55 UTC 2015
+0    [main] INFO  org.eclipse.jetty.server.Server  – jetty-8.1.10.v20130312
+37   [main] INFO  org.eclipse.jetty.deploy.providers.ScanningAppProvider  – Deployment monitor /opt/solr/solr-4.10.4/example/contexts at interval 0
+46   [main] INFO  org.eclipse.jetty.deploy.DeploymentManager  – Deployable added: /opt/solr/solr-4.10.4/example/contexts/solr-jetty-context.xml
+111  [main] INFO  org.eclipse.jetty.webapp.WebInfConfiguration  – Extract jar:file:/opt/solr/solr-4.10.4/example/webapps/solr.war!/ to /opt/solr/solr-4.10.4/example/solr-webapp/webapp
+1668 [main] INFO  org.eclipse.jetty.webapp.StandardDescriptorProcessor  – NO JSP Support for /solr, did not find org.apache.jasper.servlet.JspServlet
+1739 [main] INFO  org.apache.solr.servlet.SolrDispatchFilter  – SolrDispatchFilter.init()
+1760 [main] INFO  org.apache.solr.core.SolrResourceLoader  – JNDI not configured for solr (NoInitialContextEx)
+1760 [main] INFO  org.apache.solr.core.SolrResourceLoader  – using system property solr.solr.home: /etc/solr
+1761 [main] INFO  org.apache.solr.core.SolrResourceLoader  – new SolrResourceLoader for directory: '/etc/solr/'
+1913 [main] INFO  org.apache.solr.core.ConfigSolr  – Loading container configuration from /etc/solr/solr.xml
+2029 [main] INFO  org.apache.solr.core.CoreContainer  – New CoreContainer 2095005801
+2031 [main] INFO  org.apache.solr.core.CoreContainer  – Loading cores into CoreContainer [instanceDir=/etc/solr/]
+2031 [main] INFO  org.apache.solr.core.CoreContainer  – loading shared library: /etc/solr/lib
+2031 [main] WARN  org.apache.solr.core.SolrResourceLoader  – Can't find (or read) directory to add to classloader: lib (resolved as: /etc/solr/lib).
+2047 [main] INFO  org.apache.solr.handler.component.HttpShardHandlerFactory  – Setting socketTimeout to: 0
+2048 [main] INFO  org.apache.solr.handler.component.HttpShardHandlerFactory  – Setting urlScheme to: null
+2050 [main] INFO  org.apache.solr.handler.component.HttpShardHandlerFactory  – Setting connTimeout to: 0
+2050 [main] INFO  org.apache.solr.handler.component.HttpShardHandlerFactory  – Setting maxConnectionsPerHost to: 20
+2050 [main] INFO  org.apache.solr.handler.component.HttpShardHandlerFactory  – Setting corePoolSize to: 0
+2050 [main] INFO  org.apache.solr.handler.component.HttpShardHandlerFactory  – Setting maximumPoolSize to: 2147483647
+2050 [main] INFO  org.apache.solr.handler.component.HttpShardHandlerFactory  – Setting maxThreadIdleTime to: 5
+2051 [main] INFO  org.apache.solr.handler.component.HttpShardHandlerFactory  – Setting sizeOfQueue to: -1
+2051 [main] INFO  org.apache.solr.handler.component.HttpShardHandlerFactory  – Setting fairnessPolicy to: false
+2051 [main] INFO  org.apache.solr.handler.component.HttpShardHandlerFactory  – Setting useRetries to: false
+2270 [main] INFO  org.apache.solr.update.UpdateShardHandler  – Creating UpdateShardHandler HTTP client with params: socketTimeout=0&connTimeout=0&retry=true
+2272 [main] INFO  org.apache.solr.logging.LogWatcher  – SLF4J impl is org.slf4j.impl.Log4jLoggerFactory
+2273 [main] INFO  org.apache.solr.logging.LogWatcher  – Registering Log Listener [Log4j (org.slf4j.impl.Log4jLoggerFactory)]
+2274 [main] INFO  org.apache.solr.core.CoreContainer  – Host Name: 
+2334 [main] INFO  org.apache.solr.servlet.SolrDispatchFilter  – user.dir=/opt/solr/solr-4.10.4/example
+2335 [main] INFO  org.apache.solr.servlet.SolrDispatchFilter  – SolrDispatchFilter.init() done
+2362 [main] INFO  org.eclipse.jetty.server.AbstractConnector  – Started SocketConnector@0.0.0.0:8983
+8648478 [qtp342965157-17] INFO  org.apache.solr.servlet.SolrDispatchFilter  – [admin] webapp=null path=/admin/cores params={indexInfo=false&_=1435684924866&wt=json} status=0 QTime=46 
+8648539 [qtp342965157-17] INFO  org.apache.solr.servlet.SolrDispatchFilter  – [admin] webapp=null path=/admin/info/system params={_=1435684924963&wt=json} status=0 QTime=20 
+8649603 [qtp342965157-17] INFO  org.apache.solr.servlet.SolrDispatchFilter  – [admin] webapp=null path=/admin/cores params={_=1435684926045&wt=json} status=0 QTime=0 
+8939315 [Thread-0] INFO  org.eclipse.jetty.server.Server  – Graceful shutdown SocketConnector@0.0.0.0:8983
+8939315 [Thread-0] INFO  org.eclipse.jetty.server.Server  – Graceful shutdown o.e.j.w.WebAppContext{/solr,file:/opt/solr/solr-4.10.4/example/solr-webapp/webapp/},/opt/solr/solr-4.10.4/example/webapps/solr.war
+8940316 [Thread-0] INFO  org.apache.solr.core.CoreContainer  – Shutting down CoreContainer instance=2095005801
+8940319 [Thread-0] INFO  org.eclipse.jetty.server.handler.ContextHandler  – stopped o.e.j.w.WebAppContext{/solr,file:/opt/solr/solr-4.10.4/example/solr-webapp/webapp/},/opt/solr/solr-4.10.4/example/webapps/solr.war

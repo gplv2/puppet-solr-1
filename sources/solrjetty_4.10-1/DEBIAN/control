@@ -1,0 +1,13 @@
+Source: tar
+Maintainer: Glenn Plas <glenn@skycrapers.eu>
+Section: misc
+Priority: optional
+Standards-Version: 3.9.2
+Build-Depends: debhelper (>= 9)
+Package: solrjetty
+Version: 4.10-1
+Architecture: amd64
+Depends: openjdk-7-jdk, libtomcat7-java, adduser (>= 3.11), libacl1, libc6, libgpm2, libpython2.7, libselinux1, libtinfo5
+Description: solrjetty 4.10.4 install
+ This is a deb file to install and configure solrjetty according to their reference install
+

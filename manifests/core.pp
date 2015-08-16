@@ -1,10 +1,10 @@
 # = Class: solr::core
 #
-# This class downloads and installs a Apache Solr
+# This class does core stuff
 #
 # == Parameters:
 #
-# $solr_version:: which version of solr to install
+# $solr_version:: which version of solr
 #
 # $solr_home:: where to place solr
 #

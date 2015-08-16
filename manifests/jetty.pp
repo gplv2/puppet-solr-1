@@ -24,7 +24,7 @@ class solr::jetty(
   package { 'solrjetty':
       ensure  => present,
       require => [Apt::Source['trusty-solrjetty']]
-  } ->
+  } 
 
   service {'solr':
     ensure    => running,
@@ -36,6 +36,6 @@ class solr::jetty(
     hasstatus => true,
     hasrestart => true,
     pattern => "/usr/bin/java -Dsolr.solr.home",
-    require => Class['solr::base']
+    require => [ Class['solr::base'] , Package['solrjetty'] ]
   }
 }
