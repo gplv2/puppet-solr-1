@@ -37,7 +37,7 @@ class solr::core(
     owner   => solr,
     group   => solr,
     source  => "puppet:///modules/solr/etc/solr/cores/${core_name}/",
-    require => Package['solrjetty'],
+    require => [ Package['solrjetty'], Service['solr'] ]
   }
 
 # unload default core
