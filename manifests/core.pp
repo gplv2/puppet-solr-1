@@ -42,7 +42,7 @@ class solr::core(
   }
 
   exec { "load-${core_name}":
-    command => "sh ${solr_home}/${core_name}/curl",
+    command => "sh ${solr_conf}/${core_name}/curl",
     user    => solr,
 #    creates => '/etc/solr/<core_name>/conf/schema.xml'
   }
