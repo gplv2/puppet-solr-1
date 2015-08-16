@@ -41,12 +41,13 @@ class solr::core(
     #notify => Exec["load-${core_name}"];
   } ->
 
-  file { '/etc/solr/${core_name}/curl':
-     mode   => '0755',
+  exec { "exec_curl":
+    command => "chmod 0755 /etc/solr/${core_name}/curl",
+    creates => "/etc/solr/${core_name}/curl"
   } ->
 
   exec { "load-${core_name}":
-    command => "sh ${solr_conf}/${core_name}/curl",
+    command => "${solr_conf}/${core_name}/curl",
 #    require => File['/etc/shell_file'],
     user    => solr,
 #    creates => '/etc/solr/<core_name>/conf/schema.xml'
