@@ -38,11 +38,10 @@ class solr::core(
     owner   => solr,
     group   => solr,
     source  => "puppet:///modules/solr/etc/solr/cores/${core_name}/",
-    notify => Exec["load-${core_name}"];
+    #notify => Exec["load-${core_name}"];
   } ->
 
   file { '/etc/solr/${core_name}/curl':
-     ensure => present,
      owner  => 'root',
      group  => 'root',
      mode   => '0755',
