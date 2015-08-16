@@ -9,7 +9,7 @@ class solr::params {
       $zookeeper_hosts = ''
       $exec_path = '/usr/bin:/usr/sbin:/bin:/usr/local/bin:/opt/local/bin'
       $java_home = '/usr/lib/jvm/default-java'
-      $core_name = 'testcore'
+      $core_name = 'sunspot'
       $solr_conf = '/etc/solr'
     }
     default: { fail('Running on an untested OS bailing out') }

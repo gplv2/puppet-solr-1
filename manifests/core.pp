@@ -24,19 +24,21 @@ class solr::core(
   $solr_home = $solr::params::solr_home,
   $apache_mirror = $solr::params::apache_mirror,
   $core_name = $solr::params::core_name,
+  $solr_conf = $solr::params::solr_conf,
   ) inherits solr::params {
 
- file { '/etc/solr/':
-    source  => "puppet:///module/files/etc/solr/cores/*",
-#   require => File["/etc/solr"],
+ file { '/etc/solr/${core_name}':
+    source  => "puppet:///files/etc/solr/cores/${core_name}",
+# files/etc/solr/cores/sunspot
+#    require => File["/etc/solr"],
+    path    => "${solr_conf}/${core_name}",
     ensure  => directory,
     recurse => true,
     purge   => false,
     mode    => 0644,
-    owner   => jetty,
-    group   => jetty,
+    owner   => 'solr',
+    group   => 'solr',
 #   notify => Exec["restart-jetty"];
-#    require => Service["solr"],
   }
 
 
