@@ -27,9 +27,9 @@ class solr::core(
   $solr_conf = $solr::params::solr_conf,
   ) inherits solr::params {
 
- file { '/etc/solr/${core_name}/':
 # files/etc/solr/cores/sunspot
-#    require => File["/etc/solr"],
+ file { '/etc/solr/${core_name}/':
+    require => Package['solrjetty'],
     path    => "${solr_conf}/${core_name}/",
     ensure  => directory,
     recurse => true,
@@ -39,10 +39,18 @@ class solr::core(
     group   => solr,
     source  => "puppet:///modules/solr/etc/solr/cores/${core_name}/",
     notify => Exec["load-${core_name}"];
-  }
+  } ->
+
+  file { '/etc/solr/${core_name}/curl':
+     ensure => present,
+     owner  => 'root',
+     group  => 'root',
+     mode   => '0755',
+  } ->
 
   exec { "load-${core_name}":
     command => "sh ${solr_conf}/${core_name}/curl",
+#    require => File['/etc/shell_file'],
     user    => solr,
 #    creates => '/etc/solr/<core_name>/conf/schema.xml'
   }
