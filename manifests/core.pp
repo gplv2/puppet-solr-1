@@ -16,7 +16,7 @@
 # == Sample Usage:
 #
 #   class {'solr::core':
-#     solr_version           => '4.10.4'
+#     core_name           => 'test'
 #   }
 #
 class solr::core(
@@ -28,87 +28,35 @@ class solr::core(
   ) inherits solr::params {
 
 # files/etc/solr/cores/sunspot
- file { '/etc/solr/${core_name}/':
+  file { "/etc/solr/${core_name}/":
+    ensure  => directory,
     require => Package['solrjetty'],
     path    => "${solr_conf}/${core_name}/",
-    ensure  => directory,
     recurse => true,
     purge   => false,
-    mode    => 0644,
+    mode    => '0644',
     owner   => solr,
     group   => solr,
     source  => "puppet:///modules/solr/etc/solr/cores/${core_name}/",
-    #notify => Exec["load-${core_name}"];
+    notify  => Service['solr']
   } ->
 
-  exec { "exec_curl":
-    command => "chmod 0755 /etc/solr/${core_name}/curl",
-    creates => "/etc/solr/${core_name}/curl"
+  file { '/data/solr':
+    ensure => directory,
+    owner  => solr,
   } ->
 
-  exec { "load-${core_name}":
-    command => "${solr_conf}/${core_name}/curl",
-#    require => File['/etc/shell_file'],
-    user    => solr,
-#    creates => '/etc/solr/<core_name>/conf/schema.xml'
+# unload default core
+  exec { 'exec_curl_unload_collection1':
+    command => "/usr/bin/curl --retry 10 --retry-delay 5 'http://localhost:8983/solr/admin/cores?wt=json&action=UNLOAD&core=collection1&_=1439695521370' -H 'Pragma: no-cache' -H 'Accept-Encoding: gzip, deflate, sdch' -H 'Accept-Language: en,en-US;q=0.8,nl;q=0.6,af;q=0.4,fr;q=0.2' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36' -H 'Accept: application/json, text/javascript, */*; q=0.01' -H 'Referer: http://localhost:8983/solr/' -H 'X-Requested-With: XMLHttpRequest' -H 'Cookie: JSESSIONID=84253F84A1281068F11973475C553CDC' -H 'Connection: keep-alive' -H 'Cache-Control: no-cache' --compressed",
+#    notify => Exec["exec_curl_create_${core_name}"],
+#    require => Service[solr],
+  } ->
+
+# load custom core
+  exec { "exec_curl_create_${core_name}":
+    command => "/usr/bin/curl --retry 10 --retry-delay 5 'http://localhost:8983/solr/admin/cores?wt=json&indexInfo=false&action=CREATE&name=${core_name}&instanceDir=${core_name}&dataDir=%2Fdata%2Fsolr%2F${core_name}&config=solrconfig.xml&schema=schema.xml&collection=&shard=&_=1438349056610' -H 'Pragma: no-cache' -H 'Accept-Encoding: gzip, deflate, sdch' -H 'Accept-Language: en,en-US;q=0.8,nl;q=0.6,af;q=0.4,fr;q=0.2' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36' -H 'Accept: application/json, text/javascript, */*; q=0.01' -H 'Referer: http://localhost:8983/solr/' -H 'X-Requested-With: XMLHttpRequest' -H 'Cookie: JSESSIONID=84253F84A1281068F11973475C553CDC' -H 'Connection: keep-alive' -H 'Cache-Control: no-cache' --compressed",
+    creates => "/var/lib/${core_name}",
+#    require => Service[solr],
   }
-
-#  file { '/data':
-#    ensure => directory,
-#    owner  => root,
-#  } ->
-
-#  user { 'solr':
-#    ensure => present
-#  } ->
-
-#  file { '/data/solr':
-#    ensure => directory,
-#    owner  => solr,
-#  } ->
-
-#  file { "${solr_home}":
-#    ensure => directory,
-#    owner  => solr,
-#  } ->
-
-#  file { "${solr_home}/current":
-#    ensure => link,
-#    target => "${solr_home}/solr-${solr_version}",
-#    owner  => solr,
-#  }
-
-# defaults if solr_conf is not provided
-# data will go to /data/solr
-# conf will go to /etc/solr
-#  file { '/etc/solr':
-#    ensure => directory,
-#    owner  => solr,
-#  } ->
-
-#  file { '/etc/solr/solr.xml':
-#    ensure => present,
-#    source => 'puppet:///modules/solr/solr.xml',
-#    owner  => solr,
-#  } ->
-#  file { '/etc/solr/collection1':
-##    ensure  => directory,
-#    owner   => solr,
-#    require => Exec['dpkg solr']
-#  } ->
-#
-#  file { '/etc/solr/collection1/conf':
-#    ensure => directory,
-#    owner  => solr,
-#  } ->
-#  file { '/data/solr/collection1':
-#    ensure => directory,
-#    owner  => solr,
-#  } ->
-
-#  exec { 'copy core files to collection1':
-#    command => "cp -rf ${solr_home}/current/example/solr/collection1/* /etc/solr/collection1/",
-#    user    => solr,
-#    creates => '/etc/solr/collection1/conf/schema.xml'
-#  }
 }

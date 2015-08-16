@@ -1,3 +1,16 @@
+# = Class: solr::params
+#
+# This class manages the default jetty params 
+#
+# == Parameters:
+#
+#
+# == Requires:
+#
+#
+# == Sample Usage:
+#
+#
 class solr::params {
 
   case  $::osfamily {
