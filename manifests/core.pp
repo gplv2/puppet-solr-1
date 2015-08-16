@@ -42,8 +42,6 @@ class solr::core(
   } ->
 
   file { '/etc/solr/${core_name}/curl':
-     owner  => 'root',
-     group  => 'root',
      mode   => '0755',
   } ->
 
