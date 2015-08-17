@@ -53,7 +53,7 @@ Vagrant.configure("2") do |config|
           puppet.module_path  = "modules"
           puppet.manifest_file  = "#{puppet_base}.pp"
 #          puppet.options = ['--verbose','--debug']
-          puppet.options = ['--verbose','--graph','--debug']
+          puppet.options = ['--verbose','--graph','--debug','--graphdir /etc/puppet/modules/solr/graphs']
         end
       end
     end

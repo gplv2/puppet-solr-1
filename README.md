@@ -31,7 +31,7 @@ Vagrant testing
 
 retry a puppet apply run: adjust the uuid's first... see `df -k`
 
-/usr/bin/ruby /usr/bin/puppet apply --verbose --debug --modulepath /tmp/vagrant-puppet/modules-430797cf45fbdfda949bf064c39c60f0:/etc/puppet/modules --detailed-exitcodes --manifestdir /tmp/vagrant-puppet/manifests-5058f1af8388633f609cadb75a75dc9d /tmp/vagrant-puppet/manifests-5058f1af8388633f609cadb75a75dc9d/jetty.pp 
+/usr/bin/ruby /usr/bin/puppet apply --verbose --debug --modulepath /tmp/vagrant-puppet/modules-14cf72675f3ef26a2925e2485cd1dd79:/etc/puppet/modules --detailed-exitcodes --manifestdir /tmp/vagrant-puppet/manifests-5058f1af8388633f609cadb75a75dc9d /tmp/vagrant-puppet/manifests-5058f1af8388633f609cadb75a75dc9d/jetty.pp 
 
 
 Working with Solr Cloud
