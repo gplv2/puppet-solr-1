@@ -29,3 +29,5 @@ file { '/usr/java/default':
 class { 'solr' :
 }
 
+include solr::core
+

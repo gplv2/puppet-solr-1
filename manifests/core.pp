@@ -26,13 +26,6 @@ class solr::core(
   $solr_conf = $solr::params::solr_conf,
   ) inherits solr::params {
 
-  connection_validator { 'solr_connection':
-    provider       => 'http',
-    url            => 'http://localhost:8983',
-    retry_interval => 5,
-    timeout        => 10,
-  }
-
 # files/etc/solr/cores/sunspot
   file { "/etc/solr/${core_name}/":
     ensure  => directory,
@@ -43,7 +36,15 @@ class solr::core(
     owner   => solr,
     group   => solr,
     source  => "puppet:///modules/solr/etc/solr/cores/${core_name}/",
-    require => [ Package['solrjetty'], Service['solr'] , Resource['solr_connection']]
+    require => [ Package['solrjetty'], Service['solr'] ]
+  } ->
+
+# delay loading of cores until jetty starts (takes lots time the start/stop )
+  connection_validator { 'solr_connection':
+    provider       => 'http',
+    url            => 'http://localhost:8983/solr/#/',
+    retry_interval => 5,
+    timeout        => 30,
   } ->
 
 # unload default core

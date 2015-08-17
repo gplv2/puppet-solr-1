@@ -21,10 +21,6 @@ class solr::jetty(
     solr_version => $solr_version
   }
 
-  class { 'solr::core' :
-    core_name => $core_name
-  }
-
   package { 'solrjetty':
       ensure  => present,
       require => [Apt::Source['trusty-solrjetty']]
