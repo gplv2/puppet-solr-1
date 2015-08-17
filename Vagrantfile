@@ -40,7 +40,7 @@ Vagrant.configure("2") do |config|
 #        custom.vm.provision "shell",
 #            inline: "puppet module install puppetlabs/stdlib --modulepath=/usr/share/puppet/modules"
 # Puppet doesnt seem to be abble to find the path.  Moved to puppet code as submodule which is 
-# a problem, as standalone we need those modules for vagrant, but not on puppetmaster
+# a problem, as standalone we only need those modules for vagrant, but not on puppetmaster setup
 
         custom.vm.provision :shell, :inline => "apt-get update --fix-missing"
 
