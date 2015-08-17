@@ -29,4 +29,7 @@ file { '/usr/java/default':
 class { 'solr' :
 }
 
-include solr::core
+class { 'solr::core' :
+
+}
+

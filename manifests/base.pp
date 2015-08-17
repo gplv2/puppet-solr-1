@@ -28,17 +28,19 @@ class solr::base(
       ensure => directory,
       owner  => root,
     } ->
-
+# check to see if base data dir exists
     file { '/data/solr':
       ensure  => directory,
       require => Package['solrjetty'],
       owner   => solr,
     } ->
 
+# check to see if solr user dir exists
     user { 'solr':
       ensure => present
     } ->
 
+# check to see if solr home dir exists
     file { "${solr_home}":
       ensure => directory,
       owner  => solr,
