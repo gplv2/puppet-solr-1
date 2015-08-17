@@ -6,12 +6,10 @@
 #
 # $solr_version:: which version of solr
 #
-# $solr_home:: where to place solr
-#
 #
 # == Requires:
 #
-#   wget
+#   curl
 #
 # == Sample Usage:
 #
@@ -21,7 +19,6 @@
 #
 class solr::core(
   $solr_version = $solr::params::solr_version,
-  $solr_home = $solr::params::solr_home,
   $core_name = $solr::params::core_name,
   $solr_conf = $solr::params::solr_conf,
   ) inherits solr::params {
