@@ -4,3 +4,6 @@
 [submodule "modules/stdlib"]
 	path = modules/stdlib
 	url = https://github.com/skyscrapers/puppetlabs-stdlib
+[submodule "modules/connection_validator"]
+	path = modules/connection_validator
+	url = https://github.com/cprice404/puppet-connection-validator.git

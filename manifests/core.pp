@@ -22,10 +22,16 @@
 class solr::core(
   $solr_version = $solr::params::solr_version,
   $solr_home = $solr::params::solr_home,
-  $apache_mirror = $solr::params::apache_mirror,
   $core_name = $solr::params::core_name,
   $solr_conf = $solr::params::solr_conf,
   ) inherits solr::params {
+
+  connection_validator { 'solr_connection':
+    provider       => 'http',
+    url            => 'http://localhost:8983',
+    retry_interval => 5,
+    timeout        => 10,
+  }
 
 # files/etc/solr/cores/sunspot
   file { "/etc/solr/${core_name}/":
@@ -37,7 +43,7 @@ class solr::core(
     owner   => solr,
     group   => solr,
     source  => "puppet:///modules/solr/etc/solr/cores/${core_name}/",
-    require => [ Package['solrjetty'], Service['solr'] ]
+    require => [ Package['solrjetty'], Service['solr'] , Resource['solr_connection']]
   } ->
 
 # unload default core

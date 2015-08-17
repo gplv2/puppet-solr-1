@@ -29,7 +29,3 @@ file { '/usr/java/default':
 class { 'solr' :
 }
 
-class { 'solr::core' :
-
-}
-
