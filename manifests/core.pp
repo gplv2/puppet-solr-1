@@ -32,6 +32,7 @@ class solr::core(
     mode    => '0644',
     owner   => solr,
     group   => solr,
+    #source  => "puppet:///files/solr4-cores/etc/solr/cores/${core_name}/",
     source  => "puppet:///modules/solr/etc/solr/cores/${core_name}/",
     require => [ Package['solrjetty'], Service['solr'] ]
   } ->
